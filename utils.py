@@ -20,3 +20,19 @@ def get_all_ports(ports: list, start: int, end: int):
 
 def is_valid(port: int):
     return 0 <= port <= 65535
+
+
+def print_header():
+    print("IP\t\tPort\tProtocol")
+
+
+def print_open_tcp_port(port: int):
+    print("127.0.0.1\t" + str(port) + "\tTCP")
+
+
+def print_open_udp_port(port: int):
+    print("127.0.0.1\t" + str(port) + "\tUDP")
+
+
+def print_error(port: int, exc):
+    print(str(port) + "\n\t" + str(exc))

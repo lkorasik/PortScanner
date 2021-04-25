@@ -10,12 +10,16 @@ def scan_tcp_port(port: int):
     return result == 0
 
 
-def scan_tcp_range(ports: list):
-    open_ports = []
-
-    for port in ports:
-        result = scan_tcp_port(port)
-        if result:
-            open_ports.append(port)
-
-    return open_ports
+def scan_upd_port(port: int):
+    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+        sock.settimeout(0.01) # Maybe more???
+        result = sock.connect_ex(("127.0.0.1", port))
+        if result == 0:
+            sock.send("Hello".encode("UTF-8"))
+            try:
+                sock.recvfrom(1024)
+                return port
+            except socket.timeout:
+                return port
+            except ConnectionResetError:
+                return None
