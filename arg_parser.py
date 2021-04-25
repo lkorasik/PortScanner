@@ -25,6 +25,22 @@ class ArgumentParser:
             default=[]
         )
 
+        group = parser.add_mutually_exclusive_group()
+        group.add_argument(
+            "-t",
+            "--tcp",
+            help="Укажи, если хочешь видеть только tcp",
+            dest="tcp",
+            action="store_true"
+        )
+        group.add_argument(
+            "-u",
+            "--udp",
+            help="Укажи, если хочешь видеть только udp",
+            dest="udp",
+            action="store_true"
+        )
+
         self._args = parser.parse_args()
 
     def get_port(self):
@@ -45,3 +61,9 @@ class ArgumentParser:
             return max(v0, v1)
         else:
             return -1
+
+    def get_tcp(self):
+        return self._args.tcp
+
+    def get_udp(self):
+        return self._args.udp
